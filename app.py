@@ -96,11 +96,11 @@ def save_to_sheets(data: dict):
             worksheet = sheet.add_worksheet(title="Scored Deals", rows=1000, cols=20)
             # Add headers
             headers = [
-                "Timestamp", "Submitted By", "Company/Deal Name", "Purpose of Call",
-                "What They Want", "What We Get", "Product Fit", "Technical Effort",
-                "Timeline Alignment", "Engineering Lift", "Cross-Team Involvement",
-                "Commercial Potential", "Strategic Value", "Support Load",
-                "Score", "Recommendation", "Notes"
+                "Timestamp", "Submitted By", "Company/Deal Name", "Meeting Number",
+                "Purpose of Meeting", "What They Want", "What We Get", "Product Fit", 
+                "Technical Effort", "Timeline Alignment", "Engineering Lift", 
+                "Cross-Team Involvement", "Commercial Potential", "Strategic Value", 
+                "Support Load", "Score", "Recommendation", "Notes"
             ]
             worksheet.append_row(headers)
         
@@ -109,6 +109,7 @@ def save_to_sheets(data: dict):
             data["timestamp"],
             data["submitted_by"],
             data["company_name"],
+            data["meeting_number"],
             data["purpose"],
             data["what_they_want"],
             data["what_we_get"],
@@ -143,8 +144,14 @@ with col1:
 with col2:
     company_name = st.text_input("Company / Deal Name *")
 
+meeting_number = st.selectbox(
+    "This is meeting number ___ with this company",
+    options=["1st", "2nd", "3rd", "4th", "5th", "6th+"],
+    index=0
+)
+
 purpose = st.text_area(
-    "Purpose of the Call",
+    "Purpose of the Meeting",
     placeholder="What was the meeting about?",
     height=80
 )
@@ -279,6 +286,7 @@ if st.button("💾 Save Assessment", type="primary", disabled=not can_submit, us
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "submitted_by": submitted_by,
         "company_name": company_name,
+        "meeting_number": meeting_number,
         "purpose": purpose,
         "what_they_want": what_they_want,
         "what_we_get": what_we_get,
