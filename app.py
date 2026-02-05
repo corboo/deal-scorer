@@ -16,6 +16,27 @@ st.set_page_config(
     layout="centered"
 )
 
+# IPAI Branding CSS
+st.markdown("""
+<style>
+    .stApp { background-color: #2d2d2d; }
+    h1, h2, h3 {
+        background: linear-gradient(180deg, #c5c5c5 0%, #d4af37 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .stButton>button {
+        background: linear-gradient(135deg, #d4af37 0%, #e8c547 100%);
+        color: #2d2d2d;
+        border: none;
+        font-weight: 600;
+    }
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #e8c547 0%, #f5d742 100%);
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Scoring weights and values
 SCORING = {
     "product_fit": {
@@ -131,9 +152,16 @@ def save_to_sheets(data: dict):
         st.error(f"Failed to save to Google Sheets: {str(e)}")
         return False
 
-# Main UI
-st.title("🎯 Enterprise Deal Scorer")
-st.markdown("*Evaluate partnership opportunities with consistent criteria*")
+# Main UI with logo
+col1, col2 = st.columns([1, 6])
+with col1:
+    try:
+        st.image("ipai-logo.jpg", width=50)
+    except:
+        pass
+with col2:
+    st.title("🎯 Enterprise Deal Scorer")
+    st.markdown("*Evaluate partnership opportunities with consistent criteria*")
 st.markdown("---")
 
 # Basic Info
